@@ -1,0 +1,36 @@
+<br />
+<div class="alert alert-danger" role="alert" *ngIf="possuiErro">
+<!-- <div class="alert alert-danger" role="alert" > -->
+  Erro obtendo dados. Tente novamente.
+</div>
+<div class="card card-success">
+  <div class="card-heading alert alert-success">
+    Selecione a temperatura a ser convertida
+  </div>
+  <div class="card-body text-center m-auto">
+    <form #conversaoForm="ngForm" class="form-inline ">
+    <!-- <form class="form-inline "> -->
+      <input type="text" name="valor" class="form-control text-right" placeholder="0" [(ngModel)]="conversao.valor" required>
+      <!-- <input type="text" name="valor" class="form-control text-right" placeholder="0" numero required> -->
+      <select name="unidadeDe" [(ngModel)]="conversao.unidadeDe" class="form-control ml-3" required>
+      <!-- <select name="temperaturaDe" class="form-control ml-3" required> -->
+        <option *ngFor="let medida of medidas" [value]="medida.sigla">
+          {{medida.sigla}} - {{medida.descricao}}
+        </option>
+      </select>
+      <!-- <span aria-hidden="true"><i class="fas fa-arrow-right"></i></span> -->
+      <!-- <i class="fa fa-arrow-right"></i> -->
+      <i class="fa fa-arrow-circle-right ml-3"></i>
+      <select name="unidadePara" class="form-control ml-3" [(ngModel)]="conversao.unidadePara" required>
+      <!-- <select name="temperaturaPara" class="form-control ml-3" required> -->
+        <option *ngFor="let medida of medidas" [value]="medida.sigla">
+          {{medida.sigla}} - {{medida.descricao}}
+        </option>
+      </select>
+      <input type="submit" value="Converter" class="btn btn-success ml-3" data-toggle="modal"
+        data-target="#modalTemperatura" (click)="converter()" [disabled]="!conversaoForm.form.valid">
+    </form>
+  </div>
+  <modal-temperatura [id]="'modalTemperatura'" [conversaoResponse]="conversaoResponse" [conversao]="conversao"
+    (onConfirm)="init()"> </modal-temperatura>
+</div>
